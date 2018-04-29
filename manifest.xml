@@ -1,0 +1,25 @@
+<?xml version='1.0'?>
+<module>
+<exporttime>2010-02-11 15:57:11</exporttime>
+<name>PHPListSync</name>
+<label>PHPListSync</label>
+<parent>Tools</parent>
+<type>extension</type>
+<version>1.0.0</version>
+<license>
+  <file>modules/PHPListSync/gpl_v3.txt</file>
+</license>
+<dependencies>
+<vtiger_version>5.1.0</vtiger_version>
+</dependencies>
+<tables>
+<table>
+<name>vtiger_phplistoption</name>
+<sql><![CDATA[CREATE TABLE `vtiger_phplistoption` (
+  `option_name` varchar(64) NOT NULL default '',
+  `option_value` longtext NOT NULL,
+  PRIMARY KEY  (`option_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+</table>
+</tables>
+</module>

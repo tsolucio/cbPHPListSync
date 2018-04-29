@@ -1,0 +1,35 @@
+<?php
+$mod_strings = array (
+"LBL_PLEASECHOOSELIST"=>"Selezionare la lista da sincronizzare",
+"LBL_SETUP"=>"Setup",
+"LBL_SETUPLABEL1"=>"File di configuratione di phplist (esempio: /var/www/lists/config/config.php): ",
+"LBL_SAVESETUP"=>"Salva Impostazioni",
+"LBL_SYNCOK"=>"<br>Sincronizzazione effettuata.",
+"LBL_SYNCERROR"=>"Errore durante la sincronizzazione.",
+"LBL_FILENOTFOUND"=>"File di sincronizzazione non trovato",
+"LBL_SYNCSELECTEDNOW"=>"Sincronizzare la lista selezionata ora",
+"LBL_PLEASECHOOSE"=>"Selezionare",
+"LBL_ADDSYNC"=>"Aggiungi sincronizzazione",
+"LBL_VIEWEDITSYNCSETUP"=>"Visualizza o Modifica il setup della sincronizzazione",
+"LBL_RUNSYNCNOW"=>"Lancia la sincronizzazione ora",
+"LBL_HELP"=>"Aiuto",
+"LBL_SETUPPERMANENTSYNC"=>"Configura una sincronizzazione permanente per tutte le entita' di",
+"LBL_WITHFOLLOWINGNSLIST"=>"con la seguente lista di newsletter",
+"LBL_FOLLOWINGLISTSETUPTOSYNC"=>"Le seguenti liste sono impostate per essere sincronizzate",
+"LBL_VTIGERCRMVIEW"=>"Vista di vTiger CRM",
+"LBL_PHPLISTLIST"=>"Lista PHPlist",
+"LBL_REMOVESELECTED"=>"Rimuovi selezionati",
+"LBL_HELPMESSAGE1"=>"Qui &egrave; dove viene effettivamente impostata la sincronizzazione<br><br>
+Scegli un filtro di vTiger dei Moduli Contatti e Lead ed una lista di newsletter PHPList.<br>Quindi clicca sul bottone Salva ed &egrave quanto. Non verr&agrave; per&ograve; sincronizzato
+automaticamente quindi per favore consulta la sezione <i>",
+"LBL_HELPMESSAGE2"=>"</i> per ulteriori informazioni.",
+"LBL_HELPMESSAGE3"=>"In questa pagina puoi vedere o eliminare la configurazione per la sincronizzazione nella sezione <i>",
+"LBL_HELPMESSAGE4"=>"</i>.",
+"LBL_HELPMESSAGE5"=>"Questa &egrave; la pagina che lancia la sincronizzazione (configurata in <i>",
+"LBL_HELPMESSAGE6"=>"</i>).<br>Per eseguire la sincronizzazione automaticamente=> crea a semplice cron job che apre questa pagina.",
+"LBL_HELPMESSAGE7"=>"Per qualsiasi domanda visitate <a href=\"http://forge.vtiger.com/projects/phplistsync/\">http://forge.vtiger.com/projects/phplistsync</a>",
+"LBL_ERRORMESSAGE1"=>"Non posso aprire il file",
+"LBL_SYNCISSAVED"=>"<br><b>La sincronizzazione &egrave; stata salvata!</b>",
+"LBL_SAVESYNCBUTTON"=>"Salva sync",
+);
+?>

@@ -1,0 +1,13 @@
+<?xml version='1.0'?>
+<schema>
+	<tables>
+		<table>
+			<name>vtiger_phplistoption</name>
+			<sql><![CDATA[CREATE TABLE `vtiger_phplistoption` (
+  `option_name` varchar(64) NOT NULL default '',
+  `option_value` longtext NOT NULL,
+  PRIMARY KEY  (`option_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
+		</table>
+	</tables>
+</schema>

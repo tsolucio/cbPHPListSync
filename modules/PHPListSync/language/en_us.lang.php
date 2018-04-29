@@ -1,0 +1,35 @@
+<?php
+$mod_strings = array (
+"LBL_PLEASECHOOSELIST"=>"Please choose a list to synchronize",
+"LBL_SETUP"=>"Setup",
+"LBL_SETUPLABEL1"=>"PHPList configuration file (e.g. /var/www/lists/config/config.php): ",
+"LBL_SAVESETUP"=>"Save Configuration",
+"LBL_SYNCOK"=>"<br>Synchronization successful.",
+"LBL_SYNCERROR"=>"An error occurred during the syncronization.",
+"LBL_FILENOTFOUND"=>"Sync file not found",
+"LBL_SYNCSELECTEDNOW"=>"Sync selected configuration now",
+"LBL_PLEASECHOOSE"=>"Please choose",
+"LBL_ADDSYNC"=>"Add sync",
+"LBL_VIEWEDITSYNCSETUP"=>"View or Edit sync setup",
+"LBL_RUNSYNCNOW"=>"Run sync now",
+"LBL_HELP"=>"Help",
+"LBL_SETUPPERMANENTSYNC"=>"Setup a permanent synchronization for all entities in",
+"LBL_WITHFOLLOWINGNSLIST"=>"with the following newsletter list",
+"LBL_FOLLOWINGLISTSETUPTOSYNC"=>"The following lists are now setup to synchronize",
+"LBL_VTIGERCRMVIEW"=>"vTiger CRM view",
+"LBL_PHPLISTLIST"=>"PHPlist list",
+"LBL_REMOVESELECTED"=>"Remove selected",
+"LBL_HELPMESSAGE1"=>"This is where you actually setup the synchronization.<br><br>
+Choose a vTiger view and a PHPList newsletter list.<br>Then click the save button and you are set to go.<br><br>
+It will not automagically synchronize, so please see the section <i>",
+"LBL_HELPMESSAGE2"=>"</i> for more information.",
+"LBL_HELPMESSAGE3"=>"You may view or delete synchronization configuration setup in <i>",
+"LBL_HELPMESSAGE4"=>"</i> using this page.",
+"LBL_HELPMESSAGE5"=>"This is the page that runs the synchronzation (setup in <i>",
+"LBL_HELPMESSAGE6"=>"</i>).<br>To run the synchronization automagially=> just create a cron job=> that calls this page.",
+"LBL_HELPMESSAGE7"=>"If you have any questions please visit <a href=\"http://forge.vtiger.com/projects/phplistsync/\">http://forge.vtiger.com/projects/phplistsync</a>",
+"LBL_ERRORMESSAGE1"=>"Can't open file",
+"LBL_SYNCISSAVED"=>"<br><b>Sync is saved!</b>",
+"LBL_SAVESYNCBUTTON"=>"Save sync",
+);
+?>
