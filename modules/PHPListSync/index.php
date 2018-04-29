@@ -24,7 +24,7 @@ $(document).ready(function () {
   savesetupbutton.live('click',function(click_ev) {
     click_ev.preventDefault();
     var phplist_config_file = $('#phplist_config_file').val();
-    if (phplist_config_file != '') {
+    if (phplist_config_file !== '') {
       jqcontent.text('');
       jqcontent.load('index.php?module=PHPListSync&action=PHPListSyncAjax&com=savesetup',{"phplist_config_file":phplist_config_file});
     }// else { console.log('empty value not accepted'); }
@@ -80,14 +80,14 @@ $(document).ready(function () {
 </script>
 <?php
 global $log, $adb;
-echo '<table><tr><td><a href="http://forge.vtiger.com/projects/phplistsync/" target="_new"><img src="modules/PHPListSync/images/phpvtigersync.jpg" border=0></a>
+
+echo '<table><tr><td style="padding:10px;"><a href="http://forge.vtiger.com/projects/phplistsync/" target="_new"><img src="modules/PHPListSync/images/phpvtigersync.jpg" border=0></a>
         </td></tr>
-        <tr><td>'.$mod_strings['LBL_PLEASECHOOSE'].' : 
+        <tr><td style="padding:10px;">'.$mod_strings['LBL_PLEASECHOOSE'].' : 
+        <a href="#" id="setuplink">'.$mod_strings['LBL_SETUP'].'</a> |
         <a href="#" id="addsynclink">'.$mod_strings['LBL_ADDSYNC'].'</a> | 
         <a href="#" id="vieweditlink">'.$mod_strings['LBL_VIEWEDITSYNCSETUP'].'</a> | 
         <a href="#" id="runnowlink">'.$mod_strings['LBL_RUNSYNCNOW'].'</a> |
-        <a href="#" id="helplink">'.$mod_strings['LBL_HELP'].'</a> | 
-        <a href="#" id="setuplink">'.$mod_strings['LBL_SETUP'].'</a></td></tr></table>';
-
+        <a href="#" id="helplink">'.$mod_strings['LBL_HELP'].'</a>
+        </td></tr></table>';
 ?>
-<div id="Ajaxcontent">javascript must be enabled</div>

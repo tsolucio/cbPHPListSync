@@ -1,13 +1,15 @@
 <?php
 function help() { #Show help-page
     global $mod_strings;
-        echo '<br><h3>'.$mod_strings['LBL_ADDSYNC'].'</h3>'
+	    echo '<div style="padding-left:10px;"><h2>' . $mod_strings['LBL_HELP'] . '</h2></div>';
+	    echo '<div style="padding-left:10px;"><h3>' . $mod_strings['LBL_ADDSYNC'] .'</h3>'
         .$mod_strings['LBL_HELPMESSAGE1'].$mod_strings['LBL_RUNSYNCNOW'].$mod_strings['LBL_HELPMESSAGE2'].
         '<br><h3>'.$mod_strings['LBL_VIEWEDITSYNCSETUP'].'</h3>'
         .$mod_strings['LBL_HELPMESSAGE3'].$mod_strings['LBL_ADDSYNC'].$mod_strings['LBL_HELPMESSAGE4'].
         '<br><h3>'.$mod_strings['LBL_RUNSYNCNOW'].'</h3>'
         .$mod_strings['LBL_HELPMESSAGE5'].$mod_strings['LBL_ADDSYNC'].$mod_strings['LBL_HELPMESSAGE6'].'<br><br>'
         .$mod_strings['LBL_HELPMESSAGE7'];
+	    echo '</div>';	
 }
 
 function ShowEditForm() { #Show edit form
@@ -16,41 +18,33 @@ function ShowEditForm() { #Show edit form
 
 function ShowCurrentSync() { #Show a list of lists and views that are currently setup to sync.
     global $mod_strings,$cache_dir;
-    $handle = @fopen($cache_dir.'/sync.conf', "r");
-    if ($handle) {
-        while (!feof($handle)) {
-            $lines[] = fgets($handle, 4096);
-        }
-        fclose($handle);
-    } else {
-        echo "<br><h2>".$mod_strings['LBL_FILENOTFOUND']." $cache_dir/sync.conf:</h2><br>";
-        return;
-    }
-    $totalnumberoflines = count($lines)-1; #Count the number of lines we've got .. -1 because of a bug?
+
+	$lines = getSavedConfigs ();
+	$totalnumberoflines = count($lines);
     $i=0;
 
-    echo "<br><h2>".$mod_strings['LBL_FOLLOWINGLISTSETUPTOSYNC'].":</h2><br>"; #Print header of this page
+    echo "<br><h2 style=\"padding-left:10px;\">".$mod_strings['LBL_FOLLOWINGLISTSETUPTOSYNC'].":</h2><br>"; #Print header of this page
 //    echo '<form method="post" action="index.php" name="removesync">'; #Form, so that we can delete entries
-    echo "<table id=\"currentsyncs\"><tr><td><b>".$mod_strings['LBL_VTIGERCRMVIEW']."</b></td><td></td><td><b>".$mod_strings['LBL_PHPLISTLIST']."</b></td></tr>"; #Tables are handy
+    echo "<table id=\"currentsyncs\"><tr><td style=\"padding-left:10px;\"><b>".$mod_strings['LBL_VTIGERCRMVIEW']."</b></td><td></td><td><b>".$mod_strings['LBL_PHPLISTLIST']."</b></td></tr>"; #Tables are handy
 
     while ($i<$totalnumberoflines) { #For each configuration set..
-//        debugthis("Line $i: ".$lines[$i]."<br>");
+        debugthis("Line $i: ".$lines[$i]."<br>");
         $infoweneed = explode (",", $lines[$i]); #Explode the string to find the phplistid and vtiger viewid
         $phplistname = phplist_GetListName($infoweneed[0]);
         $vtigerviewname = vtiger_GetListName($infoweneed[1]);
-        echo "<tr><td>(".$vtigerviewname[1].") - ".$vtigerviewname[0]."</td><td><img src=\"modules/PHPListSync/images/syncsmall.png\"></td><td>$phplistname</td><td><input name=\"removefilelinenumber\" value=\"$i\" type=\"radio\"></td></tr>"; #Print the lines
+        echo "<tr><td style=\"padding-left:10px;\">(".$vtigerviewname[1].") - ".$vtigerviewname[0]."</td><td><img src=\"modules/PHPListSync/images/syncsmall.png\"></td><td>$phplistname</td><td><input name=\"removefilelinenumber\" value=\"$i\" type=\"radio\"></td></tr>"; #Print the lines
         $i++;
     }
     echo "</table>"; #Just closing the table
     //echo '<input name="com" value="removesync" type="hidden">'; #hidden field to send when we click "save"
-    echo '<br><input name="submit" value="'.$mod_strings['LBL_REMOVESELECTED'].'" type="submit" id="removesyncbutton">';//</form>';
+    echo '<br><div style="padding-left:10px;"><input name="submit" value="'.$mod_strings['LBL_REMOVESELECTED'].'" type="submit" id="removesyncbutton"></div>';//</form>';
 }
 
 function phplist_GetListName($listid) { #Get phplist listname
     global $table_prefix;
-    $db=phplist_connectDB();
-    $result = mysql_query("SELECT * FROM ".$table_prefix."list WHERE id='".$listid."'",$db) or die;
-	$myrow = mysql_fetch_row($result);
+    $db = phplist_connectDB();
+    $result = mysqli_query($db, "SELECT * FROM ".$table_prefix."list WHERE id='".$listid."'") or die;
+	$myrow = mysqli_fetch_row($result);
 	return $myrow[1]." (".$myrow[2].")";
 }
 
@@ -66,39 +60,50 @@ function phplist_connectDB() { #Connect to phplist database
     global $database_name;
     global $database_user;
     global $database_password;
-//    echo $database_host." ".$database_user." ".$database_password;
-    //debugthis("\$db = mysql_connect($database_host,$database_user,$database_password)");
-    $db = mysql_connect($database_host,$database_user,$database_password);
-    //debugthis("mysql_select_db($database_name,$db);");
-    mysql_select_db($database_name,$db);
+    
+    debugthis("\$db = mysqli_connect($database_host,$database_user,$database_password)");
+    
+	$db = mysqli_connect($database_host,$database_user,$database_password,$database_name);
+  
+	//if (!$db) {
+	//  echo "Error: Unable to connect to MySQL." . PHP_EOL;
+	//  echo "Debugging errno: " . mysqli_connect_errno() . PHP_EOL;
+	//  echo "Debugging error: " . mysqli_connect_error() . PHP_EOL;
+	//  exit;
+	//} else {  
+    //echo "Success: A proper connection to MySQL was made! The my_db database is great." . PHP_EOL;
+    //echo "Host information: " . mysqli_get_host_info($db) . PHP_EOL;
+    //}
     return $db;
 }
 
 function showSetup($currentvalue) {
     global $mod_strings;
-    echo "<h1>".$mod_strings['LBL_SETUP']."</h1><br><br>";
-    echo $mod_strings['LBL_SETUPLABEL1'];
-    echo '<input type="text" maxlength="350" id="phplist_config_file" value="'.$currentvalue.'"><br>';
-    echo '<input type="button" id="savesetupbutton" value="'.$mod_strings['LBL_SAVESETUP'].'">';
+    echo '<div style="padding-left:10px;"><h2>' . $mod_strings['LBL_SETUP'] . '</h2></div>';
+    echo '<div style="padding-left:10px;">' . $mod_strings['LBL_SETUPLABEL1'] . '</div><br />';
+    echo '<div style="padding-left:10px;"><input type="text" size="100" maxlength="350" id="phplist_config_file" value="' . $currentvalue . '"></div><br>';
+    echo '<div style="padding-left:10px;"><input type="button" id="savesetupbutton" value="' . $mod_strings['LBL_SAVESETUP'] . '"></div>';
 }
 
 function ShowForm() { #Show the form to setup new sync
     global $mod_strings;
 //    echo '<form method="post" action="index.php" name="setup">';
-    echo $mod_strings['LBL_SETUPPERMANENTSYNC'];
+    echo '<div style="padding-left:10px;"><h2>' . $mod_strings['LBL_ADDSYNC'] . '</h2></div>';
+    echo '<p style="padding-left:10px;">' . $mod_strings['LBL_SETUPPERMANENTSYNC'] . ': ';
     vtiger_showViews();
-    echo " ".$mod_strings['LBL_WITHFOLLOWINGNSLIST']." ";
-    phplist_showLists(); #Show 
+    echo "  ".$mod_strings['LBL_WITHFOLLOWINGNSLIST']."  ";
+    phplist_showLists(); #Show
+	echo '</p>';
 //    echo '<input name="com" value="savesync" type="hidden">'; #hidden field to send when we click "save"
-    echo '<br><br><input name="submit" value="Save sync" type="button" id="savesyncbutton">'; //TODO login missing here
+    echo '<br><div  style="padding-left:10px;"><input name="submit" value="Save sync" type="button" id="savesyncbutton"></div>'; //TODO login missing here
 }
 
 function phplist_showLists() { #Show phplist lists
     global $table_prefix;
-    $db=phplist_connectDB();
-    $result = mysql_query("SELECT * FROM ".$table_prefix."list",$db) or die;
+    $db = phplist_connectDB();
+    $result = mysqli_query($db, "SELECT * FROM ".$table_prefix."list") or die;
     echo '<select name="NewsletterListID" id="NewsletterListID">'; #Create dropdown
-    while ($myrow = mysql_fetch_row($result)) { #For each entry in mysql result
+    while ($myrow = mysqli_fetch_row($result)) { #For each entry in mysql result
         echo "<option value=".$myrow[0].">".$myrow[1]." - ".$myrow[2]."</option>";
     }
     echo '</select>'; #Close dropdown
@@ -106,7 +111,7 @@ function phplist_showLists() { #Show phplist lists
 
 function vtiger_showViews() { #Show vTiger views
     global $adb;
-    $result = $adb->pquery("SELECT vtiger_customview.cvid, viewname, entitytype FROM vtiger_customview WHERE entitytype in ('Contacts','Leads') ORDER BY entitytype",array());
+    $result = $adb->pquery("SELECT vtiger_customview.cvid, viewname, entitytype FROM vtiger_customview WHERE entitytype in ('Contacts','Leads','Accounts','Vendors') ORDER BY entitytype",array());
     
 	echo '<select name="CustomViewID" id="CustomViewID">'; #Create dropdown
 	while ($myrow = $adb->fetchByAssoc($result)) { #For each entry in mysql result
@@ -118,14 +123,14 @@ function vtiger_showViews() { #Show vTiger views
 function AddToSyncList($newsletterid,$crmviewid) { #Add the two id's to the sync setup file (for permanent sync)
     global $mod_strings,$cache_dir;
     #A special thank you to www.tizag.com
-	//debugthis("Saving the file.. got this info: $newsletterid,$crmviewid");
-	$myFile = $cache_dir.'/sync.conf';
+	debugthis("Saving the file.. got this info: $newsletterid,$crmviewid");
+	$myFile = $cache_dir.'sync.conf';
 	$fh = fopen($myFile, 'a') or die($mod_strings['LBL_ERRORMESSAGE1']." ".$myFile);
 	$stringData = "$newsletterid,$crmviewid\n";
 	fwrite($fh, $stringData);
 	fclose($fh);
-	//debugthis("Saved file $myFile");
-	echo $mod_strings['LBL_SYNCISSAVED'];
+	debugthis("Saved file $myFile");
+	echo '<div  style="padding-left:10px;">' . $mod_strings['LBL_SYNCISSAVED'] . '</div>';
 }
 
 function removesyncconfigfilelinenumber($linenumber) { #Removes a line in the sync config file
@@ -143,29 +148,23 @@ function removesyncconfigfilelinenumber($linenumber) { #Removes a line in the sy
 
 function ShowStartSyncPage(){ #Link to sync
     global $mod_strings,$cache_dir;
-    $handle = @fopen($cache_dir.'/sync.conf', "r");
-    if ($handle) {
-        while (!feof($handle)) {
-        $lines[] = fgets($handle, 4096);
-        }
-        fclose($handle);
-    }
-    $totalnumberoflines = count($lines)-1; #Count the number of lines we've got .. -1 because of a bug?
+	$lines = getSavedConfigs ();
+	$totalnumberoflines = count($lines);
     $i=0;
 
-    echo "<br><h2>".$mod_strings['LBL_PLEASECHOOSELIST'].":</h2><br>"; #Print header of this page
-    echo "<table id=\"currentsyncs\"><tr><td><b>vTiger CRM view</b></td><td></td><td><b>PHPlist list</b></td></tr>"; #Tables are handy
+    echo "<br><h2 style=\"padding-left:10px;\">".$mod_strings['LBL_PLEASECHOOSELIST'].":</h2><br>"; #Print header of this page
+    echo "<table id=\"currentsyncs\"><tr><td  style=\"padding-left:10px;\"><b>vTiger CRM view</b></td><td></td><td><b>PHPlist list</b></td></tr>"; #Tables are handy
 
     while ($i<$totalnumberoflines) { #For each configuration set..
             $infoweneed = explode (",", $lines[$i]); #Explode the string to find the phplistid and vtiger viewid
             $phplistname = phplist_GetListName($infoweneed[0]);
             $vtigerviewname = vtiger_GetListName($infoweneed[1]);
             $x=$i+1; #Just correcting (bug)
-            echo "<tr><td>(".$vtigerviewname[1].") - ".$vtigerviewname[0]."</td><td><img src=\"modules/PHPListSync/images/syncsmall.png\"></td><td>$phplistname</td><td><input name=\"configid\" value=\"$x\" type=\"radio\"></td></tr>"; #Print the lines
+            echo "<tr><td  style=\"padding-left:10px;\">(".$vtigerviewname[1].") - ".$vtigerviewname[0]."</td><td><img src=\"modules/PHPListSync/images/syncsmall.png\"></td><td>$phplistname</td><td><input name=\"configid\" value=\"$x\" type=\"radio\"></td></tr>"; #Print the lines
             $i++;
     }
     echo "</table>"; #Just closing the table
-    echo '<br><input name="submit" value="'.$mod_strings['LBL_SYNCSELECTEDNOW'].'" type="submit" id="syncnowbutton">';
+    echo '<br><div  style="padding-left:10px;"> <input name="submit" value="'.$mod_strings['LBL_SYNCSELECTEDNOW'].'" type="submit" id="syncnowbutton"> </div>';
 }
 
 
@@ -185,5 +184,42 @@ function save_phplist_settings($phplist_config_file) {
 	global $adb;
     $adb->query("DELETE FROM vtiger_phplistoption WHERE option_name='phplist_config_file'");
     $adb->query("INSERT INTO vtiger_phplistoption (option_name,option_value) VALUES ('phplist_config_file','".$phplist_config_file."')");
+}
+
+
+function getSavedConfigs () {
+    global $mod_strings,$cache_dir;
+    $handle = @fopen($cache_dir.'/sync.conf', "r");
+    if ($handle) {
+        while (!feof($handle)) {
+            $lines[] = fgets($handle, 4096);
+        }
+        fclose($handle);
+    } else {
+        echo "<br><h2>".$mod_strings['LBL_FILENOTFOUND']." $cache_dir/sync.conf:</h2><br>";
+        return;
+    }
+	// Remove the end empty line
+	$newLines = array_filter($lines);
+	return $newLines;
+}
+
+
+
+function logToFile($msg) { #Log to file (great for debugging)
+	global $logfile,$cache_dir,$debugsync; #Get logfile location and name from index.php
+	if ( $debugsync == "1" ) {
+		$fd = fopen($cache_dir."/cache-$logfile", "a"); #open file
+		$str = "[" . date("Y/m/d h:i:s", mktime()) . "] " . $msg; #append to file
+		fwrite($fd, $str . "\n"); 
+		fclose($fd); #close file
+	}
+}
+
+function debugthis($string) { #Just printing some debug info
+global $logfile,$debugsync;
+	if ( $debugsync == "1" ) {
+		echo "<br><b>debug:</b> $string<br>";
+	}
 }
 ?>

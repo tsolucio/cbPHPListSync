@@ -1,0 +1,23 @@
+/* Set Blacklisted users to Email Opt Out
+
+// Contacts have one extra email address in cf
+vtiger_contact_details emailoptout secondaryemail otheremail
+vtiger_contactscf cf_844
+
+
+// Leads
+vtiger_leaddetails email secondaryemail
+
+// Email Opt-Out cf668
+// Email Email Address 2 CF cf_885
+vtiger_leadscf cf668 cf_885
+
+// Accounts have no sync
+// Accounts have no extra email addresses
+vtiger_account emailoptout email1 email2
+
+get VendorID and find the CF record with it
+vtiger_vendor email
+vtiger_vendorcf cf672 cf674
+
+

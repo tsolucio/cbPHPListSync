@@ -2,7 +2,10 @@
 set_include_path(get_include_path() . PATH_SEPARATOR .'../../');
 require_once('utils.php');
 
-global $mod_strings;
+global $mod_strings,$logfile,$debugsync;
+
+$debugsync = 0;
+$logfile = "phplistsync.log";
 
 $whattodo = $_REQUEST['com'];
 
@@ -41,9 +44,9 @@ switch ($whattodo) { # If whattodo is..
             $configfilelinenumber = $_REQUEST['configid']; #Get config file line number which we are to sync (phplist + vtiger view)
             if ($configfilelinenumber) { #Check if list is sent to script (sync.php?listid=xx)
                 GetListofEmails($configfilelinenumber);
-            	echo $mod_strings['LBL_SYNCOK'];
+            	echo '<div style="padding-left:10px;">' . $mod_strings['LBL_SYNCOK'] . '</div>';
             } else { # No listid sent to this script..
-            	echo $mod_strings['LBL_SYNCERROR'];
+            	echo '<div style="padding-left:10px;">' . $mod_strings['LBL_SYNCERROR'] . '</div>';
             }
             break;
         case "setup":
