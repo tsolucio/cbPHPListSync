@@ -6,7 +6,7 @@
 			<sql><![CDATA[CREATE TABLE `vtiger_phplistoption` (
   `option_name` varchar(64) NOT NULL default '',
   `option_value` longtext NOT NULL,
-  PRIMARY KEY  (`option_name`)
+  PRIMARY KEY (`option_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8]]></sql>
 		</table>
 	</tables>

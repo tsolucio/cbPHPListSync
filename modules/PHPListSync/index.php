@@ -5,52 +5,55 @@ $(document).ready(function () {
 	var jqcontent = $('#Ajaxcontent');
 
 	var removebutton = $('#removesyncbutton', this);
-	removebutton.live('click', function (click_ev) {
-		click_ev.preventDefault();
-		var selected_sync = $('#currentsyncs input:checked').val();
-		jqcontent.text('');
-		jqcontent.load('index.php?module=PHPListSync&action=PHPListSyncAjax&com=removesync', {
-			'removefilelinenumber': selected_sync
-		});
-	});
-
-	var syncnownbutton = $('#syncnowbutton', this);
-	syncnownbutton.live('click', function (click_ev) {
-		click_ev.preventDefault();
-		var selected_sync = $('#currentsyncs input:checked').val();
-		jqcontent.text('');
-		jqcontent.load('index.php?module=PHPListSync&action=PHPListSyncAjax&com=syncnow', {
-			'configid': selected_sync
-		});
-	});
-
-	var savesetupbutton = $('#savesetupbutton', this);
-	savesetupbutton.live('click', function (click_ev) {
-		click_ev.preventDefault();
-		var phplist_config_file = $('#phplist_config_file').val();
-		if (phplist_config_file !== '') {
+	if (removebutton.length) {
+		removebutton.live('click', function (click_ev) {
+			click_ev.preventDefault();
+			var selected_sync = $('#currentsyncs input:checked').val();
 			jqcontent.text('');
-			jqcontent.load('index.php?module=PHPListSync&action=PHPListSyncAjax&com=savesetup', {
-				'phplist_config_file': phplist_config_file
+			jqcontent.load('index.php?module=PHPListSync&action=PHPListSyncAjax&com=removesync', {
+				'removefilelinenumber': selected_sync
 			});
-		}
-	});
-
+		});
+	}
+	var syncnownbutton = $('#syncnowbutton', this);
+	if (syncnownbutton.length) {
+		syncnownbutton.live('click', function (click_ev) {
+			click_ev.preventDefault();
+			var selected_sync = $('#currentsyncs input:checked').val();
+			jqcontent.text('');
+			jqcontent.load('index.php?module=PHPListSync&action=PHPListSyncAjax&com=syncnow', {
+				'configid': selected_sync
+			});
+		});
+	}
+	var savesetupbutton = $('#savesetupbutton', this);
+	if (savesetupbutton.length) {
+		savesetupbutton.live('click', function (click_ev) {
+			click_ev.preventDefault();
+			var phplist_config_file = $('#phplist_config_file').val();
+			if (phplist_config_file !== '') {
+				jqcontent.text('');
+				jqcontent.load('index.php?module=PHPListSync&action=PHPListSyncAjax&com=savesetup', {
+					'phplist_config_file': phplist_config_file
+				});
+			}
+		});
+	}
 	jqcontent.text('');
 
-	$('#helplink').click(function(ev) {
+	$('#helplink').click(function (ev) {
 		jqcontent.text('');
 		jqcontent.load('index.php?module=PHPListSync&action=PHPListSyncAjax&com=help');
 		ev.preventDefault();
 	});
 
-	$('#vieweditlink').click(function(ev) {
+	$('#vieweditlink').click(function (ev) {
 		jqcontent.text('');
 		jqcontent.load('index.php?module=PHPListSync&action=PHPListSyncAjax&com=edit', function() {});
 		ev.preventDefault();
 	});
 
-	$('#addsynclink').click(function(ev) {
+	$('#addsynclink').click(function (ev) {
 		jqcontent.text('');
 		jqcontent.load('index.php?module=PHPListSync&action=PHPListSyncAjax&com=add', function () {
 			var sb = $('#savesyncbutton', this);
@@ -68,12 +71,12 @@ $(document).ready(function () {
 		ev.preventDefault();
 	});
 
-	$('#runnowlink').click(function(ev) {
+	$('#runnowlink').click(function (ev) {
 		jqcontent.text('');
 		jqcontent.load('index.php?module=PHPListSync&action=PHPListSyncAjax&com=sync', function () {});
 	});
 
-	$('#setuplink').click(function(ev) {
+	$('#setuplink').click(function (ev) {
 		jqcontent.text('');
 		jqcontent.load('index.php?module=PHPListSync&action=PHPListSyncAjax&com=setup', function () {});
 	});
