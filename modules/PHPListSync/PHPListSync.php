@@ -13,6 +13,19 @@ class PHPListSync extends CRMEntity {
 	public $moduleIcon = array('library' => 'standard', 'containerClass' => 'slds-icon_container slds-icon-standard-account', 'class' => 'slds-icon', 'icon'=>'news');
 
 	/**
+	 * Mandatory for Saving, Include tables related to this module.
+	 */
+	public $tab_name = array('vtiger_crmentity', 'vtiger_phplistsync');
+
+	/**
+	 * Mandatory for Saving, Include tablename and tablekey columnname here.
+	 */
+	public $tab_name_index = array(
+		'vtiger_crmentity' => 'crmid',
+		'vtiger_phplistsync' => 'phplistsyncid',
+	);
+
+	/**
 	 * Invoked when special actions are performed on the module.
 	 * @param string Module name
 	 * @param string Event Type (module.postinstall, module.disabled, module.enabled, module.preuninstall)
