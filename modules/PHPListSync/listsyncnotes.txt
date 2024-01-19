@@ -4,7 +4,6 @@
 vtiger_contact_details emailoptout secondaryemail otheremail
 vtiger_contactscf cf_844
 
-
 // Leads
 vtiger_leaddetails email secondaryemail
 
@@ -19,5 +18,3 @@ vtiger_account emailoptout email1 email2
 get VendorID and find the CF record with it
 vtiger_vendor email
 vtiger_vendorcf cf672 cf674
-
-
