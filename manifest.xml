@@ -10,7 +10,7 @@
 <vtiger_max_version>5.*</vtiger_max_version>
 </dependencies>
 <license>
-  <file>modules/PHPListSync/gpl_v3.txt</file>
+<inline><![CDATA[GPL]]></inline>
 </license>
 <tables>
 <table>
